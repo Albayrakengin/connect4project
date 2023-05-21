@@ -1,9 +1,9 @@
-import table
+import game
 import user
 class conditions:
 
     def __init__(self) -> None:
-        self.board = table.ussample.gameBoard
+        self.board = game.playerData.gameBoard
         self.rows = 9
         self.cols = 9
 

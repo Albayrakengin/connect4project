@@ -1,2 +1,2 @@
-import table
-table.show_menu()
+import game
+game.show_menu()

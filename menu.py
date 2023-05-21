@@ -1,6 +1,7 @@
 import pygame
 from random import choice
-import table
+import game
+
 class TextInput:
     def __init__(self, x, y, width, height, label="", max_length=20):
         self.rect = pygame.Rect(x, y, width, height)
@@ -19,9 +20,8 @@ class TextInput:
                 self.active = True
             else:
                 self.active = False
-
-            # Reset the text input if the user clicks somewhere else
-    
+        
+        # Reset the text input if the user clicks somewhere else
         elif event.type == pygame.KEYDOWN and self.active:
             if event.key == pygame.K_BACKSPACE:
                 self.text = self.text[:-1]
@@ -63,11 +63,11 @@ class Button:
         text_rect = text_surface.get_rect(center=self.rect.center)
         surface.blit(text_surface, text_rect)
 
-    def pick_color(player1, player2):
+    def pick_first(player1, player2):
         first = choice([player1, player2])
         message = f'First Player is {first}!'
         if first == player1:
-            table.ussample.last_player = 1
+            game.playerData.current_player = 1
         else:
-            table.ussample.last_player = 2
+            game.playerData.current_player = 2
         return message

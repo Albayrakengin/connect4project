@@ -23,6 +23,7 @@ class user_data:
         }
         return sample_dict
 
+
     def moves_to_dict(self):
         sample_dict = {
             "red": self.red_moves,
@@ -30,15 +31,18 @@ class user_data:
         }
         return sample_dict
 
+
     def save_dict(self, informations, fileName):
         with open(f'{fileName}.txt', 'w') as table:
             table.write(json.dumps(informations))
     
+
     def clear_data():
         with open("moves.txt",'w') as file:
-            pass    
+            pass
         with open("table.txt",'w') as file:
-            pass    
+            pass
+
 
     def read_data(self):
         try:
