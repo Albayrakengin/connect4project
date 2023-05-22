@@ -38,8 +38,6 @@ class user_data:
     
 
     def clear_data():
-        with open("moves.txt",'w') as file:
-            pass
         with open("table.txt",'w') as file:
             pass
 

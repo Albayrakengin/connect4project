@@ -112,7 +112,6 @@ def start_table(player1, player2, current_player):
                 pygame.quit()
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                # Get the column where the player clicked
                 col = event.pos[0] // cell_size
                 # Find the lowest empty row in the column
                 row = num_rows - 1
@@ -124,7 +123,6 @@ def start_table(player1, player2, current_player):
                 if row < 0:
                     pass
 
-                # Update the game board and draw a red circle in the cell
                 if playerData.current_player == 1 and game_board[row][col] == 0:
                 # If the current player is 1, draw a red circle
                     game_board[row][col] = 1
@@ -142,35 +140,14 @@ def start_table(player1, player2, current_player):
                 #winning condition
                 try:
                     while (sample.winning_move(playerData.last_player)):
-                        for event in pygame.event.get():
-                            if event.type == pygame.QUIT:
-                                pygame.display.quit()
-                                pygame.quit()
-
-                        winner = [playerData.red_user, playerData.black_user]
-                        pygame.display.set_caption(f'winner is {winner[playerData.last_player - 1]}')
-                        game_window.fill((255, 255, 255))
-                        winner = ["red","black"]
-                        winner_button = menu.Button(250, 360, 200, 100, f'the winner is {winner[playerData.last_player - 1]}')
-                        winner_button.draw(game_window)
-                        pygame.display.update()   
+                        winning_screen
                 except:
                     pass
                 
                 #draw condition
                 try:
                     while (sample.tie_move()):
-                        for event in pygame.event.get():
-                            if event.type == pygame.QUIT:
-                                pygame.display.quit()
-                                pygame.quit()
-                                exit()
-
-                        pygame.display.set_caption("It's tie!")
-                        game_window.fill((255, 255, 255))
-                        tie_button = menu.Button(360, 360, 200, 100, f'The game is draw')
-                        tie_button.draw(game_window)
-                        pygame.display.update()   
+                        tie_screen()
                 except:
                     pass
 
@@ -192,7 +169,7 @@ def tie_screen():
     tie_button.draw(game_window)
     pygame.display.update() 
 
-def winnin_screen():
+def winning_screen():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.display.quit()
