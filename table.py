@@ -20,5 +20,5 @@ def draw_board(game_window, game_board, cell_size):
                                    cell_size // 2 - 5)
 
 def update_board(game_board, playerData):
-    tableInfo = playerData.gameBoard_to_dict(game_board)
+    tableInfo = playerData.game_board_to_dict(game_board)
     playerData.save_dict(tableInfo, "table")

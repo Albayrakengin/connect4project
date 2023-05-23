@@ -63,7 +63,7 @@ class Button:
         text_rect = text_surface.get_rect(center=self.rect.center)
         surface.blit(text_surface, text_rect)
 
-    def pick_first(player1, player2):
+    def pick_first(self, player1, player2):
         first = choice([player1, player2])
         message = f'First Player is {first}!'
         if first == player1:

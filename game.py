@@ -2,16 +2,13 @@ import sys
 import pygame
 import menu
 import user
-import conditions 
+import conditions
 from time import sleep
 from table import draw_board, update_board
 
 # Set the dimensions of the game board
 board_width = 720
 board_height = 720
-global current_player
-
-# Set the dimensions of each cell on the board
 cell_size = 80
 
 num_rows = board_height // cell_size
@@ -32,11 +29,13 @@ window_width = board_width
 window_height = board_height + 50
 
 game_window = pygame.display.set_mode((window_width, window_height))
-
 pygame.display.set_caption("Connect Four")
-playerData = user.user_data()
-                
+
+playerData = user.UserData()
+
+
 def show_menu():
+
     global game_board
     pygame.init()
     playerData.read_data()
@@ -52,8 +51,8 @@ def show_menu():
         # Handle events for the menu
         for event in pygame.event.get():
             player1_input.handle_event(event)
-            player2_input.handle_event(event)       
-                     
+            player2_input.handle_event(event)
+
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -66,18 +65,18 @@ def show_menu():
                     playerData.black_user = player2_name
                     playerData.red_user = player1_name
 
-                    message = menu.Button.pick_first(player1_name, player2_name)
+                    message = start_button.pick_first(player1_name, player2_name)
                     result_button = menu.Button(400, 400, 200, 50, message)
                     result_button.draw(game_window)
                     pygame.display.update()
                     sleep(2)
 
                     # Pass to game window
-                    start_table(player1_name, player2_name ,playerData.current_player)
+                    start_table(playerData.red_user, playerData.black_user)
                 elif continue_index:
                     if continue_button.is_clicked():
-                        game_board = playerData.gameBoard 
-                        start_table(playerData.red_user, playerData.black_user ,playerData.current_player)
+                        game_board = playerData.game_board
+                        start_table(playerData.red_user, playerData.black_user )
 
         # Draw the menu elements
         game_window.fill((255, 255, 255))
@@ -85,9 +84,9 @@ def show_menu():
         player1_input.draw(game_window)
         player2_input.draw(game_window)
         start_button = menu.Button(200, 400, 100, 50, "Start")
-        start_button.draw(game_window),
+        start_button.draw(game_window)
 
-        if playerData.has_stared:
+        if playerData.has_started:
             continue_index = True
             continue_button = menu.Button(200, 475, 100, 50, "Continue")
             continue_button.draw(game_window)
@@ -95,16 +94,17 @@ def show_menu():
             continue_index = False
         pygame.display.update()
 
-def start_table(player1, player2, current_player):
-    playerData.has_stared = 1
-    while True:
-        pygame.init()
 
-        if playerData.current_player == 1:
-            pygame.display.set_caption(player1)
-        elif playerData.current_player == 2:
-            pygame.display.set_caption(player2)
+def start_table(player1, player2, ):
+    playerData.has_started = True
+    pygame.init()
 
+    if playerData.current_player == 1:
+        pygame.display.set_caption(player1)
+    elif playerData.current_player == 2:
+        pygame.display.set_caption(player2)
+    table_start = True
+    while table_start:
         # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -112,42 +112,44 @@ def start_table(player1, player2, current_player):
                 pygame.quit()
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                    
+
                 col = event.pos[0] // cell_size
-                # Find the lowest empty row in the column
                 row = num_rows - 1
+
                 while row >= 0:
                     if game_board[row][col] == 0:
                         break
                     row -= 1
-                # If the column is full, do nothing
+
                 if row < 0:
-                    pass
+                    continue
 
                 if playerData.current_player == 1 and game_board[row][col] == 0:
-                # If the current player is 1, draw a red circle
                     game_board[row][col] = 1
                     playerData.last_player = 1
                     playerData.current_player = 2
+                    pygame.display.set_caption(playerData.black_user)
                 elif playerData.current_player == 2 and game_board[row][col] == 0:
-                    # If the current player is 2, draw a black circle
                     game_board[row][col] = 2
                     playerData.last_player = 2
                     playerData.current_player = 1
-                    
+                    pygame.display.set_caption(playerData.red_user)
+                
                 update_board(game_board, playerData)
                 sample = conditions.conditions()
 
-                #winning condition
                 try:
-                    while (sample.winning_move(playerData.last_player)):
-                        winning_screen
+                    while sample.winning_move(playerData.last_player):
+                        winning_screen()
+                        return
                 except:
                     pass
-                
-                #draw condition
+
                 try:
-                    while (sample.tie_move()):
+                    while sample.tie_move():
                         tie_screen()
+                        return
                 except:
                     pass
 
@@ -157,28 +159,55 @@ def start_table(player1, player2, current_player):
 
 
 def tie_screen():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.display.quit()
-            pygame.quit()
-            exit()
+    global game_board
+    tie = True
+    while tie:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                user.UserData.clear_data()
+                pygame.display.quit()
+                pygame.quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if turn_menu.is_clicked():
+                    playerData.clear_data()
+                    tie = False
 
-    pygame.display.set_caption("It's tie!")
-    game_window.fill((255, 255, 255))
-    tie_button = menu.Button(360, 360, 200, 100, f'The game is draw')
-    tie_button.draw(game_window)
-    pygame.display.update() 
+        pygame.display.set_caption("It's a tie!")
+        game_window.fill((255, 255, 255))
+        tie_button = menu.Button(250, 360, 200, 100, 'The game is a draw')
+        tie_button.draw(game_window)
+        turn_menu = menu.Button(500, 600, 100, 50, "Menu")
+        turn_menu.draw(game_window)
+
+        pygame.display.update()
+
+    playerData.user_reset()
+    game_board = [[0] * num_cols for _ in range(num_rows)]
 
 def winning_screen():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.display.quit()
-            pygame.quit()
+    global game_board
+    win_screen = True
+    while win_screen:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                user.UserData.clear_data()
+                pygame.display.quit()
+                pygame.quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if menu_button.is_clicked():
+                        win_screen = False
+                        
+        winner = [playerData.red_user, playerData.black_user]
+        pygame.display.set_caption(f'The winner is {winner[playerData.last_player - 1]}')
+        game_window.fill((255, 255, 255))
+        winner = ["red", "black"]
+        winner_button = menu.Button(250, 360, 200, 100, f'The winner is {winner[playerData.last_player - 1]}')
+        winner_button.draw(game_window)
+        menu_button = menu.Button(500, 600, 100, 50, "Menu")
+        menu_button.draw(game_window)
+        
+        pygame.display.update()
 
-    winner = [playerData.red_user, playerData.black_user]
-    pygame.display.set_caption(f'winner is {winner[playerData.last_player - 1]}')
-    game_window.fill((255, 255, 255))
-    winner = ["red","black"]
-    winner_button = menu.Button(250, 360, 200, 100, f'the winner is {winner[playerData.last_player - 1]}')
-    winner_button.draw(game_window)
-    pygame.display.update()  
+    playerData.user_reset()
+    game_board = [[0] * num_cols for _ in range(num_rows)]
+

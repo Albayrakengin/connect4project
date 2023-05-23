@@ -1,9 +1,8 @@
 import game
-import user
 class conditions:
 
     def __init__(self) -> None:
-        self.board = game.playerData.gameBoard
+        self.board = game.playerData.game_board
         self.rows = 9
         self.cols = 9
 
@@ -55,7 +54,6 @@ class conditions:
                     or self.vertical_win(piece, r, c)
                     or self.diagonal_win(piece, r, c)
                 ):
-                    user.user_data.clear_data()
                     return True
         return False
 
