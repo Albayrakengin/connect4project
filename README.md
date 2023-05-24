@@ -12,9 +12,9 @@ Connect 4 is a classic strategy game where players take turns dropping colored d
 
 Install required libraries. Only required library is Pygame for now.
 
-'''bash
+```python
 pip install pygame
-'''
+```
 
 ## Usage
 
