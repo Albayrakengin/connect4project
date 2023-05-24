@@ -36,6 +36,7 @@ pip install pygame
 ## Key Features
 
 **Connect 4 Gameplay**: Experience the classic Connect 4 gameplay, where players aim to connect four discs of their own color.
+
 **Data Persistence**: The game stores the current state of the game, including last player, current player, usernames and game progress, using JSON serialization in a text file.
 
 
