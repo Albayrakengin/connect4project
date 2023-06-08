@@ -2,6 +2,12 @@
 
 Connect 4 is a classic strategy game where players take turns dropping colored discs into a grid with the goal of connecting four of their own discs in a row, either horizontally, vertically, or diagonally. It's a simple yet challenging game that requires strategic thinking and planning ahead.
 
+<p align="center">
+<img src="/previews/screenshot_menu.png" width="30%"/>
+<img src="/previews/screenshot_ingame.png" width="30%"/>
+<img src="/previews/screenshot_final.png" width="30%"/>
+</p>
+
 ## Table of Contents
 
 - [Installation](#installation)
