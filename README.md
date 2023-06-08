@@ -33,7 +33,7 @@ pip install pygame
 
 - Close the game window to exit.
 
-## Key Features
+## Features
 
 **Connect 4 Gameplay**: Experience the classic Connect 4 gameplay, where players aim to connect four discs of their own color.
 
